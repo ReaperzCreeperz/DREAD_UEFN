@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="A fan-made promotional site inspired by DREAD.">
+<meta name="keywords" content="DREAD, horror game, survival horror, psychological horror">
+<meta name="robots" content="index,follow">
+<title>DREAD - Fan-Made Promotional Site</title>
+<link rel="icon" href="image/favicon.ico">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+New&display=swap">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  background-color: #000;
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+.wrapper { position: relative; min-height: 100vh; }
+.middle-bg {
+  background: url('image/noise.gif') repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1.0;
+  z-index: -12;
+  background-size: auto;
+  animation: panBackground 60s linear infinite;
+  pointer-events: none;
+}
+@keyframes panBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -100%; }
+}
+.top-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+  z-index: -10;
+  pointer-events: none;
+}
+.bottom-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+  z-index: -11;
+  pointer-events: none;
+}
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 150px;
+  z-index: 1001;
+}
+nav ul { display: flex; flex-direction: column; list-style: none; padding: 2rem 1rem; margin: 0; align-items: center; }
+nav ul li { margin: 0.5rem 0; }
+nav ul li a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; transition: color 0.3s; }
+nav ul li a.active { color: red; }
+section {
+  position: relative;
+  padding: 5rem 170px 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+.text-block {
+  max-width: 600px;
+  width: 100%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+.title-block {
+  background: rgba(0,0,0,0.85);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+.story-block, .characters-block, .gameplay-block {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 2rem;
+  z-index: -1;
+}
+.story-images, .character-images, .gameplay-images {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.story-images.visible, .character-images.visible, .gameplay-images.visible {
+  opacity: 1;
+}
+.story-images img, .character-images img, .gameplay-images img {
+  width: 995px;
+  height: auto;
+  object-fit: contain;
+  border: 4px solid #fff;
+  opacity: 1;
+}
+.characters-block ul, .gameplay-block ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.characters-block ul li, .gameplay-block ul li {
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  z-index: 4;
+  background: linear-gradient(to right, #666, #999);
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+.characters-block ul li.visible, .gameplay-block ul li.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.story-text p, .gameplay-block p {
+  position: relative;
+  background: linear-gradient(to right, #666, #999);
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+.story-text p.visible, .gameplay-block p.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.story-text p::before, .gameplay-block p::before, 
+.characters-block ul li::before, .gameplay-block ul li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('image/scratch_texture.jpg');
+  background-size: contain;
+  background-repeat: repeat;
+  opacity: 0.45;
+  z-index: -1;
+  background-blend-mode: soft-light;
+}
+.text-block h2 {
+  font-size: 3rem;
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 1rem;
+}
+.text-block h2 span {
+  display: inline-block;
+  animation: shake 0.1s infinite alternate;
+  animation-delay: calc(var(--i) * 0.05s);
+}
+.story-text p {
+  display: inline-block;
+  margin: 0.5rem 0;
+  position: relative;
+}
+.trailers-block, .devlogs-block {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  z-index: 0;
+}
+.video-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  z-index: 1002;
+  pointer-events: auto;
+}
+.video-container iframe {
+  flex: 0 0 auto;
+  width: 80%;
+  max-width: 640px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 4px solid #fff;
+  z-index: 1003;
+  pointer-events: auto;
+}
+.video-container::-webkit-scrollbar {
+  display: none;
+}
+.video-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.video-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 1004;
+  pointer-events: none;
+}
+.video-nav button {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  pointer-events: auto;
+  transition: background 0.3s;
+}
+.video-nav button:hover {
+  background: rgba(255,0,0,0.7);
+}
+.video-nav .prev { margin-left: 1rem; }
+.video-nav .next { margin-right: 1rem; }
+#top {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-height: 80vh;
+  background-color: #000;
+  z-index: 1;
+}
+#top img.banner {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  opacity: 1;
+  object-fit: cover;
+}
+#top img.logo {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 16rem;
+  z-index: 3;
+  opacity: 1;
+}
+#top .social-link {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 4;
+}
+#top .social-link a {
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  background: rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  transition: background 0.3s, color 0.3s;
+  pointer-events: auto;
+}
+#top .social-link a:hover {
+  background: rgba(255,0,0,0.7);
+  color: #fff;
+}
+#top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+#top::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+footer {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+  color: #fff;
+  z-index: 2;
+  background-color: #000;
+}
+footer img {
+  width: 16rem;
+  display: block;
+  margin: 0 auto 1rem;
+  opacity: 1;
+  z-index: 1001;
+}
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.85);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  z-index: 1001;
+}
+.footer-info div {
+  padding: 0.5rem 1rem;
+  margin: 0.3rem 0;
+  text-align: center;
+  width: 100%;
+}
+.footer-info .label {
+  color: #fff;
+}
+.footer-info .value {
+  color: red;
+}
+.footer-info a {
+  color: red;
+  text-decoration: underline;
+}
+@keyframes shake {
+  0% { transform: translateX(calc(-3px + 6px * var(--random))); }
+  100% { transform: translateX(calc(3px * var(--random))); }
+}
+.glitch { display: inline-block; }
+.glitch-char {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  border-radius: 0;
+  padding: 0 2px;
+}
+.glitch-char-big {
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  border-radius: 0;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="middle-bg"></div>
+  <div class="top-bg"></div>
+  <div class="bottom-bg"></div>
+
+  <nav>
+    <ul>
+      <li><a href="#top" class="nav-link">Top</a></li>
+      <li><a href="#story" class="nav-link">Story</a></li>
+      <li><a href="#characters" class="nav-link">Characters</a></li>
+      <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
+      <li><a href="#trailers" class="nav-link">Trailers</a></li>
+      <li><a href="#devlogs" class="nav-link">Dev Logs</a></li>
+    </ul>
+  </nav>
+
+  <section id="top">
+    <img src="image/endbanner.gif" alt="DREAD End Banner" class="banner">
+    <img src="image/dread_logo.png" alt="DREAD Logo" class="logo">
+    <div class="social-link">
+      <a href="https://x.com/Reaperzcreeperz" target="_blank">Follow on X</a>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="story-block">
+      <div class="text-block story-text">
+        <div class="title-block">
+          <h2 class="glitch" data-original="Story">
+            <span style="--i: 1; --random: ${Math.random()}">S</span>
+            <span style="--i: 2; --random: ${Math.random()}">t</span>
+            <span style="--i: 3; --random: ${Math.random()}">o</span>
+            <span style="--i: 4; --random: ${Math.random()}">r</span>
+            <span style="--i: 5; --random: ${Math.random()}">y</span>
+          </h2>
+        </div>
+        <p>The story follows Emily, a mute journalist investigating murders and disappearances.</p>
+        <p>Quiet and introverted, her silence heightens the tension.</p>
+        <p>She arrives at a cursed hotel on a rainy night, where a ritual unleashes darkness, forcing her into a horrifying ordeal.</p>
+        <p>Pursued by a masked, part-human, part-machine figure, Emily faces disturbing, grotesque environments and psychological terror, leading to a deadly confrontation that defines her fate.</p>
+      </div>
+      <div class="story-images">
+        <img src="image/promotion.png" alt="Story Promotion">
+      </div>
+    </div>
+  </section>
+
+  <section id="characters">
+    <div class="characters-block">
+      <div class="text-block">
+        <div class="title-block">
+          <h2 class="glitch" data-original="Characters">
+            <span style="--i: 1; --random: ${Math.random()}">C</span>
+            <span style="--i: 2; --random: ${Math.random()}">h</span>
+            <span style="--i: 3; --random: ${Math.random()}">a</span>
+            <span style="--i: 4; --random: ${Math.random()}">r</span>
+            <span style="--i: 5; --random: ${Math.random()}">a</span>
+            <span style="--i: 6; --random: ${Math.random()}">c</span>
+            <span style="--i: 7; --random: ${Math.random()}">t</span>
+            <span style="--i: 8; --random: ${Math.random()}">e</span>
+            <span style="--i: 9; --random: ${Math.random()}">r</span>
+            <span style="--i: 10; --random: ${Math.random()}">s</span>
+          </h2>
+        </div>
+        <ul>
+          <li>Emily: A mute journalist investigating murders and disappearances.</li>
+        </ul>
+      </div>
+      <div class="character-images">
+        <img src="image/emily.png" alt="Emily">
+      </div>
+    </div>
+  </section>
+
+  <section id="gameplay">
+    <div class="gameplay-block">
+      <div class="text-block">
+        <div class="title-block">
+          <h2 class="glitch" data-original="Gameplay">
+            <span style="--i: 1; --random: ${Math.random()}">G</span>
+            <span style="--i: 2; --random: ${Math.random()}">a</span>
+            <span style="--i: 3; --random: ${Math.random()}">m</span>
+            <span style="--i: 4; --random: ${Math.random()}">e</span>
+            <span style="--i: 5; --random: ${Math.random()}">p</span>
+            <span style="--i: 6; --random: ${Math.random()}">l</span>
+            <span style="--i: 7; --random: ${Math.random()}">a</span>
+            <span style="--i: 8; --random: ${Math.random()}">y</span>
+          </h2>
+        </div>
+        <p>First person Survival horror map. More information coming soon.</p>
+        <ul>
+          <li>Groom: Dread Graphics has improved in UEFN since Within The Loop Unseen Demo. Players who are on DirectX12 and DX11 will be able to see the realistic Hair strands on characters, while on lower platforms (Switch, Mobile, Xbox One, and PS4) will see the default hair instead of hair strands. This also affects lighting as well to obtain that realistic visual.</li>
+        </ul>
+      </div>
+      <div class="gameplay-images">
+        <img src="image/groom.png" alt="Groom Feature">
+      </div>
+    </div>
+  </section>
+
+  <section id="trailers">
+    <div class="trailers-block">
+      <div class="text-block">
+        <div class="title-block">
+          <h2 class="glitch" data-original="Trailers">
+            <span style="--i: 1; --random: ${Math.random()}">T</span>
+            <span style="--i: 2; --random: ${Math.random()}">r</span>
+            <span style="--i: 3; --random: ${Math.random()}">a</span>
+            <span style="--i: 4; --random: ${Math.random()}">i</span>
+            <span style="--i: 5; --random: ${Math.random()}">l</span>
+            <span style="--i: 6; --random: ${Math.random()}">e</span>
+            <span style="--i: 7; --random: ${Math.random()}">r</span>
+            <span style="--i: 8; --random: ${Math.random()}">s</span>
+          </h2>
+        </div>
+      </div>
+      <div class="video-container">
+        <div class="video-nav">
+          <button class="prev">←</button>
+          <button class="next">→</button>
+        </div>
+        <iframe src="https://www.youtube.com/embed/KqliJ9qogvU?si=8phdtJbQo_Ei2Eri" title="DREAD Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="devlogs">
+    <div class="devlogs-block">
+      <div class="text-block">
+        <div class="title-block">
+          <h2 class="glitch" data-original="Dev Logs">
+            <span style="--i: 1; --random: ${Math.random()}">D</span>
+            <span style="--i: 2; --random: ${Math.random()}">e</span>
+            <span style="--i: 3; --random: ${Math.random()}">v</span>
+            <span style="--i: 4; --random: ${Math.random()}"> </span>
+            <span style="--i: 5; --random: ${Math.random()}">L</span>
+            <span style="--i: 6; --random: ${Math.random()}">o</span>
+            <span style="--i: 7; --random: ${Math.random()}">g</span>
+            <span style="--i: 8; --random: ${Math.random()}">s</span>
+          </h2>
+        </div>
+      </div>
+      <div class="video-container">
+        <div class="video-nav">
+          <button class="prev">←</button>
+          <button class="next">→</button>
+        </div>
+        <iframe src="https://www.youtube.com/embed/m2HKc1L88UI?si=ul33l-akNo93-kEL" title="DREAD Dev Log 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/TSIxNb9uy9w?si=hqKwnZ9MyAVjyaeg" title="DREAD Dev Log 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="image/uefnlogo.jpg" alt="UEFN Logo">
+    <div class="footer-info">
+      <div><span class="label">Genre:</span> <span class="value">Survival Horror & Psychological Horror</span></div>
+      <div><span class="label">Release Date:</span> <span class="value">2026</span></div>
+      <div><span class="label">Players:</span> <span class="value">4 Players</span></div>
+      <div><span class="label">Creator:</span> <span class="value"><a href="https://www.fortnite.com/@not-reaperz?lang=en-US" target="_blank">Not Reaperz</a></span></div>
+      <div><span class="label">Inspired by:</span> <span class="value">Resident Evil Requiem, Evil Dead Rise</span></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Navigation highlighting
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(sec => {
+      const sectionTop = sec.offsetTop - 60;
+      if (window.pageYOffset >= sectionTop) {
+        current = sec.getAttribute("id");
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  });
+
+  // Glitch effect for titles
+  function randomGlitch() {
+    document.querySelectorAll(".glitch").forEach(el => {
+      const originalText = el.getAttribute("data-original");
+      const crypticWords = ["Help Me", "Loop", "Requiem", "Save Us", "Trapped"];
+      if (Math.random() < 0.05 && el.tagName === "H2") {
+        const randomWord = crypticWords[Math.floor(Math.random() * crypticWords.length)];
+        el.innerHTML = randomWord.split("").map((char, i) => `<span style="--i: ${i + 1}; --random: ${Math.random()}">${char}</span>`).join("");
+        setTimeout(() => {
+          el.innerHTML = originalText.split("").map((char, i) => `<span style="--i: ${i + 1}; --random: ${Math.random()}">${char}</span>`).join("");
+        }, 200);
+      } else {
+        const chars = originalText.split("");
+        const numChars = Math.floor(Math.random() * 3) + 1;
+        const indices = [];
+        while (indices.length < numChars && indices.length < chars.length) {
+          const index = Math.floor(Math.random() * chars.length);
+          if (!indices.includes(index) && /[a-zA-Z]/.test(chars[index])) {
+            indices.push(index);
+          }
+        }
+        indices.forEach(index => {
+          const isBig = Math.random() > 0.5;
+          const className = isBig ? "glitch-char-big" : "glitch-char";
+          const originalChar = chars[index];
+          chars[index] = `<span class="${className}" style="--i: ${index + 1}; --random: ${Math.random()}; transition: all 0.2s;">${originalChar.toUpperCase()}</span>`;
+        });
+        el.innerHTML = chars.join("");
+        setTimeout(() => {
+          el.innerHTML = originalText.split("").map((char, i) => `<span style="--i: ${i + 1}; --random: ${Math.random()}">${char}</span>`).join("");
+        }, 200);
+      }
+    });
+    setTimeout(randomGlitch, Math.random() * 1000 + 500);
+  }
+  randomGlitch();
+
+  // Video navigation
+  document.querySelectorAll('.video-container').forEach(container => {
+    const prevBtn = container.querySelector('.prev');
+    const nextBtn = container.querySelector('.next');
+    const scrollAmount = container.querySelector('iframe').offsetWidth + 16; // iframe width + gap
+    prevBtn.addEventListener('click', () => {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  });
+
+  // Animations with Intersection Observer
+  const observerOptions = {
+    root: null,
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const sectionId = entry.target.id;
+      const images = entry.target.querySelector('.story-images, .character-images, .gameplay-images');
+      const texts = entry.target.querySelectorAll('.story-text p, .characters-block ul li, .gameplay-block p, .gameplay-block ul li');
+      
+      if (entry.isIntersecting) {
+        if (images) {
+          images.classList.add('visible');
+        }
+        texts.forEach(text => text.classList.add('visible'));
+      } else {
+        if (images) {
+          images.classList.remove('visible');
+        }
+        texts.forEach(text => {
+          text.classList.remove('visible');
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    if (section.id !== 'top' && section.id !== 'trailers' && section.id !== 'devlogs') {
+      observer.observe(section);
+    }
+  });
+</script>
+</body>
+</html>
