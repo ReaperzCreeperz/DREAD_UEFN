@@ -440,8 +440,8 @@ footer img {
 @media (max-width: 768px) {
   nav {
     position: fixed;
-    top: auto;
-    bottom: 0;
+    top: 0;
+    bottom: auto;
     left: 0;
     height: auto;
     width: 100%;
@@ -460,7 +460,7 @@ footer img {
     font-size: 0.8rem;
   }
   section {
-    padding: 4rem 1rem;
+    padding: 6rem 1rem 4rem 1rem; /* Adjusted padding to account for top nav */
     min-height: auto;
   }
   .story-block, .characters-block, .gameplay-block {
@@ -477,18 +477,18 @@ footer img {
     position: static;
     max-width: 100%;
     margin-top: 1rem;
-    align-self: flex-end; /* Maintain right alignment */
+    align-self: flex-end;
   }
   .text-block h2 {
     font-size: 2.5rem;
   }
   #top img.logo {
-    left: 10%; /* Maintain original left alignment */
+    left: 10%;
     transform: translateY(-50%);
     width: 12rem;
   }
   #top .social-link {
-    right: 20px; /* Maintain original right alignment */
+    right: 20px;
     bottom: 20px;
   }
   .video-container {
@@ -502,20 +502,7 @@ footer img {
     margin-bottom: 1rem;
   }
   .video-nav {
-    top: auto;
-    bottom: 0;
-    transform: none;
-    flex-direction: row;
-    justify-content: center;
-    position: relative;
-    margin-top: 1rem;
-  }
-  .video-nav button {
-    margin: 0 1rem;
-  }
-  .video-nav .prev, .video-nav .next {
-    margin-left: 0;
-    margin-right: 0;
+    display: none; /* Hide arrows on mobile */
   }
   footer img {
     width: 12rem;
@@ -528,10 +515,6 @@ footer img {
   }
   nav ul li a {
     font-size: 0.7rem;
-  }
-  .video-nav button {
-    font-size: 1.2rem;
-    padding: 0.3rem 0.8rem;
   }
   .story-images img, .character-images img, .gameplay-images img {
     max-width: 100%;
